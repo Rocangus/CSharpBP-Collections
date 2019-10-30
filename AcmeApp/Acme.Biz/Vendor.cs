@@ -70,7 +70,6 @@ namespace Acme.Biz
             return $"Vendor: {this.CompanyName} ({this.VendorId})";
         }
 
-
         /// <summary>
         /// Sends an email to welcome a new vendor.
         /// </summary>
@@ -84,5 +83,31 @@ namespace Acme.Biz
                                                         this.Email);
             return confirmation;
         }
+
+        /// <summary>
+        /// Overridden to support comparison
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            Vendor compareVendor = obj as Vendor;
+            if (compareVendor != null &&
+                VendorId == compareVendor.VendorId &&
+                CompanyName == compareVendor.CompanyName &&
+                Email == compareVendor.Email)
+                return true;
+
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode(); 
+        }
+
     }
 }
